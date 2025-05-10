@@ -30,16 +30,17 @@ jobs:
         with:
           node-version: "20"
           cache: "pnpm"
-
-      - name: Install pnpm globally and check version
+          
+      - name: Install pnpm globally
         run: |
           npm install -g pnpm
-          echo "PATH before update: $PATH"
-          echo "$(npm bin -g)" >> $GITHUB_PATH
-          echo "PATH after update: $PATH"
-          pnpm --version
-        continue-on-error: true  # Allow the build to continue even if this fails (debug step)
-
+          pnpm --version  # Check pnpm installation
+          
+      - name: Ensure pnpm is available
+        run: |
+          echo "PATH is: $PATH"
+          echo "$(npm bin -g)" >> $GITHUB_PATH  # Ensure pnpm is in the path
+          
       - name: Install dependencies
         run: pnpm install
         working-directory: ${{ env.BUILD_PATH }}
