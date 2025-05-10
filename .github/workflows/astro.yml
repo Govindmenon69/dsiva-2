@@ -36,6 +36,11 @@ jobs:
           npm install -g pnpm
           echo "$(npm bin -g)" >> $GITHUB_PATH
           echo "pnpm installed at $(which pnpm)"
+          echo "pnpm location: $(which pnpm)"
+
+      - name: Verify pnpm installation
+        run: pnpm --version
+        continue-on-error: true
 
       - name: Install dependencies
         run: pnpm install
