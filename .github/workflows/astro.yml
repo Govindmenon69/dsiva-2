@@ -31,12 +31,17 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
-      - name: Install pnpm using npx
+      - name: Install pnpm globally and check version
         run: |
-          npx -y pnpm install
+          npm install -g pnpm
+          echo "PATH before update: $PATH"
+          echo "$(npm bin -g)" >> $GITHUB_PATH
+          echo "PATH after update: $PATH"
+          pnpm --version
+        continue-on-error: true  # Allow the build to continue even if this fails (debug step)
 
       - name: Install dependencies
-        run: npx pnpm install
+        run: pnpm install
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: Setup Pages
@@ -44,7 +49,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build with Astro
-        run: npx pnpm astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+        run: pnpm astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: Upload artifact
