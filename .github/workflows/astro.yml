@@ -25,22 +25,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
       - name: Install pnpm globally
         run: |
           npm install -g pnpm
           pnpm --version  # Ensure pnpm is installed correctly
 
-      - name: Ensure pnpm is in the PATH
-        run: |
-          echo "PATH before: $PATH"
-          echo "$(npm bin -g)" >> $GITHUB_PATH  # Ensure global npm binaries are in PATH
-          echo "PATH after: $PATH"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -69,4 +63,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
