@@ -34,14 +34,14 @@ jobs:
       - name: Install pnpm globally
         run: |
           npm install -g pnpm
-          pnpm --version  # Check if pnpm was installed correctly
+          pnpm --version  # Ensure pnpm is installed correctly
 
       - name: Ensure pnpm is in the PATH
         run: |
-          echo "PATH is: $PATH"
-          echo "$(npm bin -g)" >> $GITHUB_PATH  # Add global npm binaries to PATH
-          echo "Updated PATH is: $PATH"
-        
+          echo "PATH before: $PATH"
+          echo "$(npm bin -g)" >> $GITHUB_PATH  # Ensure global npm binaries are in PATH
+          echo "PATH after: $PATH"
+
       - name: Install dependencies
         run: pnpm install
         working-directory: ${{ env.BUILD_PATH }}
@@ -69,4 +69,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
